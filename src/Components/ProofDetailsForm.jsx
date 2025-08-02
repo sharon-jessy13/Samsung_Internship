@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './ProofDetailsForm.css';
 import {
   Box,
@@ -16,54 +16,32 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import useProofDetailsForm from '../Hooks/useProofDetailsForm';
 
-// Import your child components
 import Addressproof from './Addressproof';
 import NOC from './NOC';
 import OfficeCorrespondence from './OfficeCorrespondence';
 
 
-function ProofDetailsForm({ setWorkflowState, workflowState }) {
-  const [letterType, setLetterType] = useState('Employment Certificate');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [reason, setReason] = useState('');
-  const [comment, setComment] = useState('');
-  const [nocFromDate, setNocFromDate] = useState('');
-  const [nocToDate, setNocToDate] = useState('');
-  const isViewMode = workflowState === 'Approval' || workflowState === 'Report';
-  const showCommentSection = workflowState !== 'Report';
-
-  
-  const handleLetterTypeChange = (e) => {
-    setLetterType(e.target.value);
-    setIsSubmitted(false); 
-    setReason('');   
-    setComment('');  
-    setWorkflowState('Initiate'); 
-    console.log("Letter type changed. Resetting form fields and submission status.");
-  };
-
-  // Handler for form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(true); 
-    setWorkflowState('Approval'); 
-    console.log("Form submitted! Workflow state set to Approval.");
-
-    const formData = {
-      letterType,
-      reason,
-      comment,
-    };
-    console.log("Form Data:", formData);
-  };
-
-  
-  const handleApproveClick = () => {
-    setWorkflowState('Report'); 
-    console.log("Approve button clicked! Workflow state set to Report.");
-  };
-  const showActionButtons = isSubmitted && workflowState === 'Approval';
+function ProofDetailsForm({ workflowState, setWorkflowState }) {
+  const {
+    letterType,
+    isSubmitted,
+    reason,
+    comment,
+    nocFromDate,
+    nocToDate,
+    isViewMode,
+    showCommentSection,
+    handleLetterTypeChange,
+    handleSubmit,
+    handleApproveClick,
+    setReason,
+    setComment,
+    setNocFromDate,
+    setNocToDate,
+    showActionButtons
+  } = useProofDetailsForm({ workflowState, setWorkflowState });
 
   return (
     <Box className="proof-details-container">
