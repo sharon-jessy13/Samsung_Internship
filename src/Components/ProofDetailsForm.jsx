@@ -17,6 +17,7 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import useProofDetailsForm from '../Hooks/useProofDetailsForm';
+import { getLetterTypes } from '../api/api';
 
 import Addressproof from './Addressproof';
 import NOC from './NOC';
@@ -24,7 +25,20 @@ import OfficeCorrespondence from './OfficeCorrespondence';
 
 
 function ProofDetailsForm({ workflowState, setWorkflowState }) {
-  const {
+ 
+  const [letterTypes, setLetterTypes] = React.useState([]);
+  React.useEffect(() => {
+  async function fetchLetterTypes() {
+    try {
+      const data = await getLetterTypes();
+      setLetterTypes(data);
+    } catch (error) {
+      console.error("Failed to fetch letter types:", error);
+    }
+  }
+  fetchLetterTypes();
+}, []);
+ const {
     letterType,
     isSubmitted,
     reason,
@@ -42,7 +56,6 @@ function ProofDetailsForm({ workflowState, setWorkflowState }) {
     setNocToDate,
     showActionButtons
   } = useProofDetailsForm({ workflowState, setWorkflowState });
-
   return (
     <Box className="proof-details-container">
       <Box className="proof-header">
@@ -56,7 +69,7 @@ function ProofDetailsForm({ workflowState, setWorkflowState }) {
       <form onSubmit={handleSubmit}>
         <Box className="form-section">
           <Grid container spacing={2} className="letter-grid">
-            
+
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth>
                 <Typography className="label">Type of Letter Required</Typography>
@@ -64,17 +77,19 @@ function ProofDetailsForm({ workflowState, setWorkflowState }) {
                   value={letterType}
                   onChange={handleLetterTypeChange}
                   className="select-box"
-                  disabled={isViewMode} 
+                  disabled={isViewMode}
                 >
-                  <MenuItem value="Address Proof">Address Proof</MenuItem>
-                  <MenuItem value="Employment Certificate">Employment Certificate</MenuItem>
-                  <MenuItem value="No Objection Certificate">No Objection Certificate</MenuItem>
-                  <MenuItem value="Office Correspondence Letter">Office Correspondence Letter</MenuItem>
+                  {letterTypes.map((type) => (
+                    <MenuItem key={type} value={type}>
+                      {type}
+                    </MenuItem>
+                  ))}
+
                 </Select>
               </FormControl>
             </Grid>
 
-            
+
             {letterType === 'No Objection Certificate' && (
               <Grid item xs={12} sm={4}> {/* Adjusted size */}
                 <Typography className="label">Leave From</Typography>
@@ -85,12 +100,12 @@ function ProofDetailsForm({ workflowState, setWorkflowState }) {
                   onChange={(e) => setNocFromDate(e.target.value)}
                   className="select-box"
                   InputLabelProps={{ shrink: true }}
-                  disabled={isViewMode} 
+                  disabled={isViewMode}
                 />
               </Grid>
             )}
 
-            
+
             {letterType === 'No Objection Certificate' && (
               <Grid item xs={12} sm={4}> {/* Adjusted size */}
                 <Typography className="label">Leave To</Typography>
@@ -101,13 +116,13 @@ function ProofDetailsForm({ workflowState, setWorkflowState }) {
                   onChange={(e) => setNocToDate(e.target.value)}
                   className="select-box"
                   InputLabelProps={{ shrink: true }}
-                  disabled={isViewMode} 
+                  disabled={isViewMode}
                 />
               </Grid>
             )}
           </Grid>
         </Box>
-        
+
         {letterType === 'Address Proof' && <Addressproof />}
         {letterType === 'No Objection Certificate' && <NOC workflowState={workflowState} />}
         {letterType === 'Office Correspondence Letter' && <OfficeCorrespondence />}
@@ -135,20 +150,20 @@ function ProofDetailsForm({ workflowState, setWorkflowState }) {
               className="textarea"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              disabled={isViewMode} 
+              disabled={isViewMode}
             />
           </Box>
         )}
 
-       
-        {!isSubmitted ? ( 
+
+        {!isSubmitted ? (
           <Box className="form-submit">
             <Button variant="contained" type="submit" className="submit-button">
               Submit
             </Button>
           </Box>
-        ) : ( 
-          showActionButtons && ( 
+        ) : (
+          showActionButtons && (
             <>
               <Box className="action-buttons" sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
                 <Button variant="outlined" color="primary" className="action-button">

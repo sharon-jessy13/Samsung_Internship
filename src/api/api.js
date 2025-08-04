@@ -1,27 +1,60 @@
 const baseURL = 'https://107.108.5.184:66/swagger/index.html';
 
 
-async function getLetterTypes() {
-  const response = await fetch(`${baseURL}/api/HRLetter/GetLetterTypes`);
-  const data = await response.json();
-  console.log("Letter Types:", data);
+export async function getLetterTypes() {
+  try {
+    const response = await fetch(`${baseURL}/api/HRLetter/GetLetterTypes`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Letter Types:", data);
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch letter types:", error);
+    throw error;
+  }
 }
 
-async function getEmpResourceType() {
-  const response = await fetch(`${baseURL}/api/HRLetter/GetEmpResourceType`);
-  const data = await response.json();
-  console.log("Employee Resource Type:", data);
+
+export async function getEmpResourceType(MEmpID) {
+  try {
+    const response = await fetch(`${baseURL}/api/HRLetter/GetEmpResourceType?MEmpID=${MEmpID}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Employee Resource Type:", data);
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch employee resource type:", error);
+    throw error;
+  }
 }
 
 
-async function getHRLetterDetailsByInstanceID(instanceId) {
+export async function getHRLetterDetailsByInstanceID(instanceId) {
   const response = await fetch(`${baseURL}/api/HRLetter/GetHRLetterDetailsByInstanceID?InstanceID=${instanceId}`);
   const data = await response.json();
   console.log("HR Letter Details:", data);
 }
 
 
-async function updateHRLetterDetails(payload) {
+export async function updateHRLetterDetails(payload) {
   const response = await fetch(`${baseURL}/api/HRLetter/UpdateDetails`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -32,14 +65,14 @@ async function updateHRLetterDetails(payload) {
 }
 
 
-async function getApproverMEmpID() {
+export async function getApproverMEmpID() {
   const response = await fetch(`${baseURL}/api/HRLetter/GetApproverMEmpID`);
   const data = await response.json();
   console.log("Approver MEmpID:", data);
 }
 
 
-async function updateFileIndexByMasterID(payload) {
+export async function updateFileIndexByMasterID(payload) {
   const response = await fetch(`${baseURL}/api/HRLetter/UpdateFileIndexIDByMasterID`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -49,7 +82,7 @@ async function updateFileIndexByMasterID(payload) {
   console.log("Update FileIndexID:", data);
 }
 
-async function updateWFAttachmentFileIndexID(payload) {
+export async function updateWFAttachmentFileIndexID(payload) {
   const response = await fetch(`${baseURL}/api/HRLetter/UpdateWFAttachmentFileIndexID`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -60,21 +93,21 @@ async function updateWFAttachmentFileIndexID(payload) {
 }
 
 
-async function getWFAttachmentFileIndexId() {
+export async function getWFAttachmentFileIndexId() {
   const response = await fetch(`${baseURL}/api/HRLetter/GetWFAttachmentFileIndexId`);
   const data = await response.json();
   console.log("WF Attachment File Index ID:", data);
 }
 
 
-async function getEmployeeTeam() {
+export async function getEmployeeTeam() {
   const response = await fetch(`${baseURL}/api/HRLetter/GetEmployeeTeam`);
   const data = await response.json();
   console.log("Employee Team:", data);
 }
 
 
-async function updateApprovedByHRDetails(payload) {
+export async function updateApprovedByHRDetails(payload) {
   const response = await fetch(`${baseURL}/api/HRLetter/UpdateApprovedByHRDetails`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
