@@ -80,8 +80,8 @@ function ProofDetailsForm({ workflowState, setWorkflowState }) {
                   disabled={isViewMode}
                 >
                   {letterTypes.map((type) => (
-                    <MenuItem key={type} value={type}>
-                      {type}
+                    <MenuItem key={type.Ikeyvalue} value={type.letterType}>
+                      {type.letterType}
                     </MenuItem>
                   ))}
 
@@ -91,7 +91,7 @@ function ProofDetailsForm({ workflowState, setWorkflowState }) {
 
 
             {letterType === 'No Objection Certificate' && (
-              <Grid item xs={12} sm={4}> {/* Adjusted size */}
+              <Grid item xs={12} sm={4}> 
                 <Typography className="label">Leave From</Typography>
                 <TextField
                   type="date"

@@ -11,7 +11,7 @@ const useProofDetailsForm = (externalState = {}) => {
   const workflowState = externalWorkflowState ?? internalWorkflowState;
   const setWorkflowState = setExternalWorkflowState ?? setInternalWorkflowState;
 
-  const [letterType, setLetterType] = useState('Employment Certificate');
+  const [letterType, setLetterType] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [reason, setReason] = useState('');
   const [comment, setComment] = useState('');

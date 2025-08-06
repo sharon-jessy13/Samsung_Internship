@@ -1,0 +1,22 @@
+{
+  "status": true,
+  "data": [
+    {
+      "lKeyValue": "AP",
+      "letterType": "Address Proof"
+    },
+    {
+      "lKeyValue": "NOC",
+      "letterType": "No Objection Certificate"
+    },
+    {
+      "lKeyValue": "OCL",
+      "letterType": "Office Correspondence Letter"
+    },
+    {
+      "lKeyValue": "EC",
+      "letterType": "Employment Certificate"
+    }
+  ],
+  "message": "Letter Types fetched successfully"
+}
